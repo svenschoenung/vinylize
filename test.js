@@ -20,29 +20,20 @@ function collect(files) {
 }
 
 describe('vinylize()', function() {
-  it('requires glob or path in options', function() {
-    expect(vinylize.bind(null)).to.throw(Error);
-    expect(vinylize.bind(null, {})).to.throw(Error);
-    expect(vinylize.bind(null, { path:'' })).not.to.throw(Error);
-    expect(vinylize.bind(null, { glob:'' })).not.to.throw(Error);
-  });
-  it('requires glob or path function to return non-null', function(done) {
-    streamify([{}])
-      .pipe(vinylize({
-         glob: function() { return null; },
-         path: function() { return null; }
-      }))
-      .on('error', function(error) {
-	 expect(error).not.to.equal(null);
-	 done();
-      })
-      .on('finish', function() {
-	 assert.fail('finish', 'error', 'expected error event in pipe');
-	 done();
-      });
-  });
+  it('requires options.glob or options.path',
+    function(done) {
+      streamify([{}])
+        .pipe(vinylize())
+        .on('error', function(error) {
+          expect(error).not.to.equal(null);
+          done();
+        })
+        .on('finish', function() {
+          assert.fail('finish', 'error', 'expected error event in pipe');
+          done();
+        });
+    });
 });
-
 
 describe('vinylize({path:...})', function() {
   it('should create vinyl file with given absolute path', function(done) {

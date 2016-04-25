@@ -1,18 +1,9 @@
 var isFunction = require('util').isFunction;
-var isNullOrUndefined = require('util').isNullOrUndefined;
 var path = require('path');
 
 var through = require('through2').obj;
 var vinyl = require('vinyl-fs');
 var File = require('vinyl');
-
-function validateOptions(opts) {
-  if (isNullOrUndefined(opts) ||
-      (isNullOrUndefined(opts.glob) &&
-       isNullOrUndefined(opts.path))) {
-    throw new Error('Either options.glob or options.path is required');
-  }
-}
 
 function createOptions(obj, opts) {
   var options = {};
@@ -33,7 +24,6 @@ function sanitizeOptions(options) {
 }
 
 function vinylize(opts) {
-  validateOptions(opts);
   return through(function(obj, enc, doneWithVinylize) {
     var options = createOptions(obj, opts);
     if (options.glob) {
