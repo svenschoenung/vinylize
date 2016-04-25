@@ -7,7 +7,7 @@ var File = require('vinyl');
 
 function createOptions(obj, opts) {
   var options = {};
-  Object.keys(opts).forEach(function(key) {
+  Object.keys(opts || {}).forEach(function(key) {
     options[key] = (isFunction(opts[key])) ? opts[key](obj) : opts[key];
   });
   return options;
