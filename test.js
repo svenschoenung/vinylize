@@ -139,6 +139,35 @@ describe('vinylize({path:...})', function() {
           done();
         });
     });
+  it('should render string options with lodash.template',
+    function(done) {
+      var files = [];
+      var obj0 = { myCwd: '/path0/', myPath:'foo0/bar0'};
+      var obj1 = { myCwd: '/path1/', myPath:'foo1/bar1'};
+      streamify([obj0, obj1])
+        .pipe(vinylize({
+          path:'<%= data.myPath %><%= options.myExt[0] %>',
+          cwd:'<%= data.myCwd %>',
+	  myExt: ['.js']
+        }))
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(2);
+          expect(isVinyl(files[0])).to.equal(true);
+          expect(files[0].contents).to.equal(null);
+          expect(files[0].path).to.equal('/path0/foo0/bar0.js');
+          expect(files[0].cwd).to.equal('/path0/');
+          expect(files[0].base).to.equal('/path0/');
+          expect(files[0].data).to.equal(obj0);
+          expect(isVinyl(files[1])).to.equal(true);
+          expect(files[1].contents).to.equal(null);
+          expect(files[1].path).to.equal('/path1/foo1/bar1.js');
+          expect(files[1].cwd).to.equal('/path1/');
+          expect(files[1].base).to.equal('/path1/');
+          expect(files[1].data).to.equal(obj1);
+          done();
+        });
+    });
   it('should be able to handle non-objects',
     function(done) {
       var files = [];
@@ -156,5 +185,6 @@ describe('vinylize({path:...})', function() {
           done();
         });
     });
+});
 
 });
