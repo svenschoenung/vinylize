@@ -6,13 +6,13 @@ var through = require('through2').obj;
 var vinyl = require('vinyl-fs');
 var File = require('vinyl');
 
-function createOptions(obj, opts) {
+function createOptions(data, opts) {
   var options = {};
   Object.keys(opts || {}).forEach(function(key) {
     if (util.isFunction(opts[key])) {
-      options[key] = opts[key](obj);
+      options[key] = opts[key](data);
     } else if (util.isString(opts[key])) {
-      options[key] = template(opts[key])({obj:obj, options:opts});
+      options[key] = template(opts[key])({data:data, options:opts});
     } else {
       options[key] = opts[key];
     }
@@ -31,13 +31,13 @@ function sanitizeOptions(options) {
 }
 
 function vinylize(opts) {
-  return through(function(obj, enc, doneWithVinylize) {
-    var options = createOptions(obj, opts);
+  return through(function(data, enc, doneWithVinylize) {
+    var options = createOptions(data, opts);
     if (options.glob) {
       var self = this;
       vinyl.src(options.glob, options)
         .pipe(through(function(file, enc, doneWithVinylFs) {
-          file.data = obj;
+          file.data = data;
           self.push(file);
         }))
         .on('finish', doneWithVinylize);
@@ -45,7 +45,7 @@ function vinylize(opts) {
     }
     if (options.path) {
       var file = new File(sanitizeOptions(options));
-      file.data = obj;
+      file.data = data;
       this.push(file);
       doneWithVinylize();
       return;
