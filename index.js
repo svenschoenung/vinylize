@@ -1,5 +1,6 @@
-var isFunction = require('util').isFunction;
+var util = require('util');
 var path = require('path');
+var template = require('lodash.template');
 
 var through = require('through2').obj;
 var vinyl = require('vinyl-fs');
@@ -8,7 +9,13 @@ var File = require('vinyl');
 function createOptions(obj, opts) {
   var options = {};
   Object.keys(opts || {}).forEach(function(key) {
-    options[key] = (isFunction(opts[key])) ? opts[key](obj) : opts[key];
+    if (util.isFunction(opts[key])) {
+      options[key] = opts[key](obj);
+    } else if (util.isString(opts[key])) {
+      options[key] = template(opts[key])({obj:obj, options:opts});
+    } else {
+      options[key] = opts[key];
+    }
   });
   return options;
 }
