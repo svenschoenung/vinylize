@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/svenschoenung/vinylize.svg)](https://david-dm.org/svenschoenung/vinylize)
 [![devDependency Status](https://david-dm.org/svenschoenung/vinylize/dev-status.svg)](https://david-dm.org/svenschoenung/vinylize#info=devDependencies)
 [![Code Climate](https://codeclimate.com/github/svenschoenung/vinylize/badges/gpa.svg)](https://codeclimate.com/github/svenschoenung/vinylize)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/)](https://www.codacy.com/app/svenschoenung/vinylize)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/6e2e598556e44060a119e23deea3781b)](https://www.codacy.com/app/svenschoenung/vinylize)
 
 # vinylize
 
