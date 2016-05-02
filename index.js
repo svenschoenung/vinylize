@@ -11,7 +11,7 @@ function createOptions(data, opts) {
     if (_.isFunction(opts[key])) {
       options[key] = opts[key](data);
     } else if (_.isString(opts[key])) {
-      options[key] = _.template(opts[key])({data:data, options:opts});
+      options[key] = _.template(opts[key])({ data:data, options:opts });
     } else {
       options[key] = opts[key];
     }
@@ -41,7 +41,7 @@ function vinylize(opts) {
         .pipe(through(function(file, encVinylFs, doneWithVinylFs) {
           file.data = data;
           self.push(file);
-	  doneWithVinylFs();
+          doneWithVinylFs();
         }))
         .on('finish', doneWithVinylize);
       return;
