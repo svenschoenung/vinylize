@@ -30,7 +30,7 @@ function sanitizeOptions(options) {
 }
 
 function vinylize(opts) {
-  return through(function(data, enc, doneWithVinylize) {
+  return through(function(data, encVinylize, doneWithVinylize) {
     var options = createOptions(data, opts);
     if (_.isPlainObject(data)) {
       options = _.extend({}, data, options);
@@ -38,9 +38,10 @@ function vinylize(opts) {
     if (options.glob) {
       var self = this;
       vinyl.src(options.glob, options)
-        .pipe(through(function(file, enc, doneWithVinylFs) {
+        .pipe(through(function(file, encVinylFs, doneWithVinylFs) {
           file.data = data;
           self.push(file);
+	  doneWithVinylFs();
         }))
         .on('finish', doneWithVinylize);
       return;
