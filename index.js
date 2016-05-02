@@ -1,6 +1,5 @@
-var util = require('util');
+var _ = require('lodash');
 var path = require('path');
-var template = require('lodash.template');
 
 var through = require('through2').obj;
 var vinyl = require('vinyl-fs');
@@ -9,10 +8,10 @@ var File = require('vinyl');
 function createOptions(data, opts) {
   var options = {};
   Object.keys(opts || {}).forEach(function(key) {
-    if (util.isFunction(opts[key])) {
+    if (_.isFunction(opts[key])) {
       options[key] = opts[key](data);
-    } else if (util.isString(opts[key])) {
-      options[key] = template(opts[key])({data:data, options:opts});
+    } else if (_.isString(opts[key])) {
+      options[key] = _.template(opts[key])({data:data, options:opts});
     } else {
       options[key] = opts[key];
     }
@@ -33,6 +32,9 @@ function sanitizeOptions(options) {
 function vinylize(opts) {
   return through(function(data, enc, doneWithVinylize) {
     var options = createOptions(data, opts);
+    if (_.isPlainObject(data)) {
+      options = _.extend({}, data, options);
+    }
     if (options.glob) {
       var self = this;
       vinyl.src(options.glob, options)
