@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var path = require('path');
+var isAbsolute = require('path-is-absolute');
 var through = require('through2').obj;
 var File = require('vinyl');
 
@@ -24,16 +25,17 @@ function sanitizeOptions(options) {
   if (!options.cwd) {
     options.cwd = process.cwd();
   }
-  if (!path.isAbsolute(options.path)) {
+  if (!isAbsolute(options.path)) {
     options.path = path.resolve(options.cwd, options.path);
   }
   if (!options.base) {
     options.base = path.dirname(options.path);
   }
-  if (!path.isAbsolute(options.base)) {
+  if (!isAbsolute(options.base)) {
     options.base = path.resolve(options.cwd, options.base);
   }
-  if (!options.base.endsWith('/')) {
+  if (options.base.length > 0 &&
+      options.base[options.base.length-1] !== '/') {
     options.base += '/';
   }
   return options;
