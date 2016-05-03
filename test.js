@@ -47,13 +47,13 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(2);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/path0/foo0/bar0.js');
           expect(files[0].cwd).to.equal('/path0/');
           expect(files[0].base).to.equal('/path0/foo0/');
           expect(files[0].data).to.equal(obj0);
           expect(isVinyl(files[1])).to.equal(true);
-          expect(files[1].contents).to.equal(null);
+          expect(files[1].contents.toString()).to.equal('');
           expect(files[1].path).to.equal('/path1/foo1/bar1.js');
           expect(files[1].cwd).to.equal('/path1/');
           expect(files[1].base).to.equal('/path1/foo1/');
@@ -76,13 +76,13 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(2);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/path0/foo0/bar0.js');
           expect(files[0].cwd).to.equal('/path0/');
           expect(files[0].base).to.equal('/path0/foo0/');
           expect(files[0].data).to.equal(obj0);
           expect(isVinyl(files[1])).to.equal(true);
-          expect(files[1].contents).to.equal(null);
+          expect(files[1].contents.toString()).to.equal('');
           expect(files[1].path).to.equal('/path1/foo1/bar1.js');
           expect(files[1].cwd).to.equal('/path1/');
           expect(files[1].base).to.equal('/path1/foo1/');
@@ -99,7 +99,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/path/foo/bar.js');
           expect(files[0].cwd).to.equal('/path/');
           expect(files[0].base).to.equal('/path/foo/');
@@ -117,7 +117,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/foo/bar.js');
           expect(files[0].cwd).to.equal(process.cwd());
           expect(files[0].base).to.equal('/foo/');
@@ -135,7 +135,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/foo/bar.js');
           expect(files[0].cwd).to.equal(process.cwd());
           expect(files[0].base).to.equal('/foo/');
@@ -153,7 +153,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/foo/bar.js');
           expect(files[0].cwd).to.equal(process.cwd());
           expect(files[0].base).to.equal('/');
@@ -161,7 +161,24 @@ describe('vinylize()', function() {
           done();
         });
     });
-
+  it('should use contents option for vinyl files',
+    function(done) {
+      var files = [];
+      var obj = {};
+      streamify([obj])
+        .pipe(vinylize({path: '/foo/bar.js', contents: new Buffer('x')}))
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(isVinyl(files[0])).to.equal(true);
+          expect(files[0].contents.toString()).to.equal('x');
+          expect(files[0].path).to.equal('/foo/bar.js');
+          expect(files[0].cwd).to.equal(process.cwd());
+          expect(files[0].base).to.equal('/foo/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
   it('should make relative paths absolute',
     function(done) {
       var files = [];
@@ -172,7 +189,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal(process.cwd() + '/foo/bar.js');
           expect(files[0].cwd).to.equal(process.cwd());
           expect(files[0].base).to.equal(process.cwd() + '/foo/');
@@ -190,7 +207,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal(process.cwd() + '/foo/bar.js');
           expect(files[0].cwd).to.equal(process.cwd());
           expect(files[0].base).to.equal(process.cwd() + '/foo/');
@@ -208,7 +225,7 @@ describe('vinylize()', function() {
         .on('finish', function() {
           expect(files).to.have.length.of(1);
           expect(isVinyl(files[0])).to.equal(true);
-          expect(files[0].contents).to.equal(null);
+          expect(files[0].contents.toString()).to.equal('');
           expect(files[0].path).to.equal('/path/foo/bar.js');
           expect(files[0].cwd).to.equal('/path/');
           expect(files[0].base).to.equal('/path/foo/');

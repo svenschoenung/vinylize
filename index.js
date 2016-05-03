@@ -38,6 +38,9 @@ function sanitizeOptions(options) {
       options.base[options.base.length-1] !== '/') {
     options.base += '/';
   }
+  if (!options.contents) {
+    options.contents = new Buffer('');
+  }
   return options;
 }
 
