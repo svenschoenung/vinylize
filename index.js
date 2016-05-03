@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var path = require('path');
 var through = require('through2').obj;
-var vinyl = require('vinyl-fs');
 var File = require('vinyl');
 
 function createOptions(data, opts) {
@@ -15,6 +14,9 @@ function createOptions(data, opts) {
       options[key] = opts[key];
     }
   });
+  if (_.isPlainObject(data)) {
+    options = _.extend({}, data, options);
+  }
   return options;
 }
 
@@ -26,10 +28,13 @@ function sanitizeOptions(options) {
     options.path = path.resolve(options.cwd, options.path);
   }
   if (!options.base) {
-    options.base = path.dirname(options.path) + '/';
+    options.base = path.dirname(options.path);
   }
   if (!path.isAbsolute(options.base)) {
-    options.base = path.resolve(options.cwd, options.base) + '/';
+    options.base = path.resolve(options.cwd, options.base);
+  }
+  if (!options.base.endsWith('/')) {
+    options.base += '/';
   }
   return options;
 }
@@ -37,20 +42,6 @@ function sanitizeOptions(options) {
 function vinylize(opts) {
   return through(function(data, encVinylize, doneWithVinylize) {
     var options = createOptions(data, opts);
-    if (_.isPlainObject(data)) {
-      options = _.extend({}, data, options);
-    }
-    if (options.glob) {
-      var self = this;
-      vinyl.src(options.glob, options)
-        .pipe(through(function(file, encVinylFs, doneWithVinylFs) {
-          file.data = data;
-          self.push(file);
-          doneWithVinylFs();
-        }))
-        .on('finish', doneWithVinylize);
-      return;
-    }
     if (options.path) {
       var file = new File(sanitizeOptions(options));
       file.data = data;
@@ -58,7 +49,7 @@ function vinylize(opts) {
       doneWithVinylize();
       return;
     }
-    doneWithVinylize('Either options.glob or options.path is required');
+    doneWithVinylize('Missing path property in options');
   });
 }
 

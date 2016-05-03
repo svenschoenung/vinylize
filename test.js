@@ -20,7 +20,7 @@ function collect(files) {
 }
 
 describe('vinylize()', function() {
-  it('requires options.glob or options.path',
+  it('requires options.path',
     function(done) {
       streamify([{}])
         .pipe(vinylize())
@@ -107,9 +107,6 @@ describe('vinylize()', function() {
           done();
         });
     });
-});
-
-describe('vinylize({path:...})', function() {
   it('should create vinyl file with absolute path from data object',
     function(done) {
       var files = [];
@@ -146,6 +143,25 @@ describe('vinylize({path:...})', function() {
           done();
         });
     });
+  it('should use absolute base options for vinyl files',
+    function(done) {
+      var files = [];
+      var obj = {};
+      streamify([obj])
+        .pipe(vinylize({path: '/foo/bar.js', base:'/'}))
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(isVinyl(files[0])).to.equal(true);
+          expect(files[0].contents).to.equal(null);
+          expect(files[0].path).to.equal('/foo/bar.js');
+          expect(files[0].cwd).to.equal(process.cwd());
+          expect(files[0].base).to.equal('/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
+
   it('should make relative paths absolute',
     function(done) {
       var files = [];
