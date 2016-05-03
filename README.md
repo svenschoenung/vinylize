@@ -8,13 +8,46 @@
 
 # vinylize
 
-Turn object streams into vinyl streams.
+Turn object streams into [`vinyl`](http://npmjs.com/package/vinyl) streams.
 
 ## Installation
 
     npm install vinylize
 
 ## Usage
+
+The following turns each movie object into a [`vinyl`](http://npmjs.com/package/vinyl) file that can be wrapped in a [lodash template](https://lodash.com/docs#template) by [`gulp-wrap`](http://npmjs.com/package/gulp-wrap):
+
+```js
+var gulp = require('gulp');
+var streamify = require('stream-array');
+var vinylize = require('vinylize');
+var friendlyUrl = require('friendly-url');
+var wrap = require('gulp-wrap');
+
+gulp.task('default', function() {
+  // this might come from a database or other data source
+  var movies = [
+    { title: '2001: A Space Odyssey', director:'Stanley Kubrick', year: 1968 },
+    { title: 'THX 1138', director: 'George Lucas', year: 1971 },
+    { title: 'Blade Runner', director: 'Ridley Scott', year: 1982 }
+  ];
+
+  return streamify(movies)
+    .pipe(vinylize({ path: function(movie) {
+      return friendlyUrl(movie.title) + '.html';
+    }}))
+    .pipe(wrap('<h1><%= title %> (<%= year %>)</h1>\n' +
+               '<div>Directed by: <%= director %></div>'))
+    .pipe(gulp.dest('movies'));
+});
+```
+
+**Result:**
+
+    movies/2001-a-space-odyssey.html
+    movies/thx-1138.html
+    movies/blade-runner.html
 
 ## License
 
