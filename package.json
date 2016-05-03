@@ -1,7 +1,7 @@
 {
   "name": "vinylize",
   "description": "Turn object streams into vinyl streams",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": {
     "name": "Sven Schönung <sven.schoenung@gmail.com> (http://sven.schoenung.org/)"
   },
@@ -33,6 +33,14 @@
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha test.js -x test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "codacy": "istanbul cover ./node_modules/mocha/bin/_mocha test.js -x test.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage"
   },
-  "keywords": [],
+  "keywords": [
+    "vinyl",
+    "vinyl-fs",
+    "stream",
+    "object-stream",
+    "transform",
+    "gulp",
+    "gulpfriendly"
+  ],
   "license": "MIT"
 }
