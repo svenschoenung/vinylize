@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var path = require('path');
-
 var through = require('through2').obj;
 var vinyl = require('vinyl-fs');
 var File = require('vinyl');
@@ -25,6 +24,12 @@ function sanitizeOptions(options) {
   }
   if (!path.isAbsolute(options.path)) {
     options.path = path.resolve(options.cwd, options.path);
+  }
+  if (!options.base) {
+    options.base = path.dirname(options.path) + '/';
+  }
+  if (!path.isAbsolute(options.base)) {
+    options.base = path.resolve(options.cwd, options.base) + '/';
   }
   return options;
 }
