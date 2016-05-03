@@ -35,7 +35,7 @@ function sanitizeOptions(options) {
     options.base = path.resolve(options.cwd, options.base);
   }
   if (options.base.length > 0 &&
-      options.base[options.base.length-1] !== '/') {
+      options.base[options.base.length - 1] !== '/') {
     options.base += '/';
   }
   if (!options.contents) {
