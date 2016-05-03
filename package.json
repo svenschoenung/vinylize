@@ -11,7 +11,7 @@
     "url": "git://github.com/svenschoenung/vinylize.git"
   },
   "engines": {
-    "node": ">= 0.12"
+    "node": ">= 0.10"
   },
   "dependencies": {
     "lodash": "^4.11.2",
