@@ -25,14 +25,14 @@ var vinylize = require('vinylize');
 var friendlyUrl = require('friendly-url');
 var wrap = require('gulp-wrap');
 
-gulp.task('default', function() {
-  // this might come from a database or other data source
-  var movies = [
-    { title: '2001: A Space Odyssey', director:'Stanley Kubrick', year: 1968 },
-    { title: 'THX 1138', director: 'George Lucas', year: 1971 },
-    { title: 'Blade Runner', director: 'Ridley Scott', year: 1982 }
-  ];
+// this might come from a database or other data source
+var movies = [
+  { title:'2001: A Space Odyssey', director:'Stanley Kubrick', year:1968 },
+  { title:'THX 1138', director:'George Lucas', year:1971 },
+  { title:'Blade Runner', director:'Ridley Scott', year:1982 }
+];
 
+gulp.task('default', function() {
   return streamify(movies)
     .pipe(vinylize({ path: function(movie) {
       return friendlyUrl(movie.title) + '.html';
