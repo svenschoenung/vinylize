@@ -17,7 +17,8 @@
     "lodash": "^4.11.2",
     "path-is-absolute": "^1.0.0",
     "through2": "^2.0.1",
-    "vinyl": "^1.1.1"
+    "vinyl": "^1.1.1",
+    "stream-array": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -25,8 +26,7 @@
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "mocha": "^2.2.4",
-    "mocha-lcov-reporter": "^1.0.0",
-    "stream-array": "^1.1.1"
+    "mocha-lcov-reporter": "^1.0.0"
   },
   "scripts": {
     "test": "istanbul cover ./node_modules/mocha/bin/_mocha test.js -x test.js --report html -- -R spec",

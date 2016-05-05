@@ -20,7 +20,14 @@ function collect(files) {
 }
 
 describe('vinylize()', function() {
-  it('requires options.path',
+  it('requires source object array and/or options map',
+    function() {
+      expect(vinylize.bind(null, false)).to.throw(Error);
+      expect(vinylize.bind(null, [], false)).to.throw(Error);
+      expect(vinylize.bind(null, false, {})).to.throw(Error);
+      expect(vinylize.bind(null, [], {}, false)).to.throw(Error);
+    });
+  it('requires path property in source object or options map',
     function(done) {
       streamify([{}])
         .pipe(vinylize())
@@ -70,7 +77,7 @@ describe('vinylize()', function() {
         .pipe(vinylize({
           path:'<%= data.myPath %><%= options.myExt[0] %>',
           cwd:'<%= data.myCwd %>',
-	  myExt: ['.js']
+          myExt: ['.js']
         }))
         .pipe(collect(files))
         .on('finish', function() {
@@ -240,9 +247,9 @@ describe('vinylize()', function() {
       streamify([obj])
         .pipe(vinylize({
            path: 'foo/bar.js',
-	   cwd: '/path/',
-	   contents: 'text'
-	}))
+           cwd: '/path/',
+           contents: 'text'
+        }))
         .pipe(collect(files))
         .on('finish', function() {
           expect(files).to.have.length.of(1);
@@ -260,7 +267,7 @@ describe('vinylize()', function() {
     function(done) {
       var files = [];
       var file = new File({
-	 path: '/foo/bar.js'
+         path: '/foo/bar.js'
       });
       streamify([file])
         .pipe(vinylize())
@@ -271,6 +278,45 @@ describe('vinylize()', function() {
           done();
         });
     });
+  it('should create stream from source object array',
+    function(done) {
+      var files = [];
+      var obj = {
+           path: 'foo/bar.js',
+           cwd: '/path/',
+      };
+      vinylize([obj])
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(files[0].contents.toString()).to.equal('');
+          expect(files[0].path).to.equal('/path/foo/bar.js');
+          expect(files[0].cwd).to.equal('/path/');
+          expect(files[0].base).to.equal('/path/foo/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
+  it('should create stream from source object array and options map',
+    function(done) {
+      var files = [];
+      var obj = {};
+      vinylize([obj], {
+          path: 'foo/bar.js',
+          cwd: '/path/',
+        })
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(files[0].contents.toString()).to.equal('');
+          expect(files[0].path).to.equal('/path/foo/bar.js');
+          expect(files[0].cwd).to.equal('/path/');
+          expect(files[0].base).to.equal('/path/foo/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
+
 
 
 });

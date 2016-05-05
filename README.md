@@ -32,9 +32,9 @@ var movies = [
   { title:'Blade Runner', director:'Ridley Scott', year:1982 }
 ];
 
-gulp.task('default', function() {
+// you can use vinylize() in an existing stream
+gulp.task('vinylize-pipe', function() {
   return streamify(movies)
-    // turns movie objects into vinyl files
     .pipe(vinylize({ path: function(movie) {
       return friendlyUrl(movie.title) + '.html';
     }}))
@@ -42,6 +42,17 @@ gulp.task('default', function() {
                '<div>Directed by: <%= director %></div>'))
     .pipe(gulp.dest('movies'));
 });
+
+// alternatively you can use vinylize() to create a new stream
+gulp.task('vinylize-stream', function() {
+  vinylize(movies, { path: function(movie) {
+      return friendlyUrl(movie.title) + '.html';
+    }}))
+    .pipe(wrap('<h1><%= title %> (<%= year %>)</h1>\n' +
+               '<div>Directed by: <%= director %></div>'))
+    .pipe(gulp.dest('movies'));
+});
+
 ```
 
 ### Result

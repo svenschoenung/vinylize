@@ -1,13 +1,16 @@
 # API
 
+* [`vinylize([optionsMap])`](API.md#vinylizeoptionsmap)
+* [`vinylize(sourceObjects[, optionsMap])`](API.md#vinylizesourceobjects-optionsmap)
+
 ## vinylize([optionsMap])
 
-Returns a [`stream.Transform`] that converts objects to [`vinyl`] files. 
-
-Existing `vinyl` files are passed through unchanged.
+Returns a [`stream.Transform`] that converts objects to [`vinyl`] files. Existing `vinyl` files are passed through unchanged.
 
 Each source object is stored in the `.data` property of the generated `vinyl` file. This follows the standard proposed by [`gulp-data`] and allows for interoperability with other gulp plugins.
 
+**Arguments:**
+* `optionsMap`: a plain object of options. See [Vinyl file construction](API#vinyl-file-construction) for a list of options. See [Options map](API#options-map) for guidance on how to use options.
 
 [`stream.Transform`]: https://nodejs.org/api/stream.html#stream_class_stream_transform
 [`vinyl`]: https://npmjs.com/package/vinyl
@@ -68,3 +71,12 @@ Each option can be provided as a **function**, a **string** or **other value**:
 [Using functions in options map]: examples/using-functions-in-options-map.md
 [Using lodash templates in options map]: examples/using-lodash-templates-in-options-map.md
 [Using values in options map]: examples/using-values-in-options-map.md
+
+## vinylize(sourceObjects[, optionsMap])
+
+Returns a new stream of `vinyl` files that have been converted from the given `sourceObjects`.
+
+**Arguments:**
+* `sourceObjects`: an array of objects that should be converted to `vinyl` files.
+* `optionsMap`: a plain object of options. See [Vinyl file construction](API#vinyl-file-construction) for a list of options. See [Options map](API#options-map) for guidance on how to use options.
+
