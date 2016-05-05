@@ -34,6 +34,7 @@ var movies = [
 
 gulp.task('default', function() {
   return streamify(movies)
+    // turns movie objects into vinyl files
     .pipe(vinylize({ path: function(movie) {
       return friendlyUrl(movie.title) + '.html';
     }}))
