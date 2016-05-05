@@ -32,7 +32,7 @@ var movies = [
   { title:'Blade Runner', director:'Ridley Scott', year:1982 }
 ];
 
-// you can use vinylize() in an existing stream
+// you can use vinylize() in an existing stream to convert objects to vinyl files
 gulp.task('vinylize-pipe', function() {
   return streamify(movies)
     .pipe(vinylize({ path: function(movie) {
@@ -43,7 +43,7 @@ gulp.task('vinylize-pipe', function() {
     .pipe(gulp.dest('movies'));
 });
 
-// alternatively you can use vinylize() to create a new stream
+// alternatively you can use vinylize() to create a new stream of vinyl files
 gulp.task('vinylize-stream', function() {
   vinylize(movies, { path: function(movie) {
       return friendlyUrl(movie.title) + '.html';
