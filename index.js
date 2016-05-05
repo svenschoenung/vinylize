@@ -4,7 +4,7 @@ var isAbsolute = require('path-is-absolute');
 var through = require('through2').obj;
 var File = require('vinyl');
 
-function createOptions(data, opts) {
+function evaluateOptions(data, opts) {
   var options = {};
   Object.keys(opts || {}).forEach(function(key) {
     if (_.isFunction(opts[key])) {
@@ -21,7 +21,7 @@ function createOptions(data, opts) {
   return options;
 }
 
-function sanitizeOptions(options) {
+function sanitizePaths(options) {
   if (!options.cwd) {
     options.cwd = process.cwd();
   }
@@ -38,6 +38,13 @@ function sanitizeOptions(options) {
       options.base[options.base.length - 1] !== '/') {
     options.base += '/';
   }
+  return options;
+}
+
+function sanitizeContents(options) {
+  if (_.isString(options.contents)) {
+    options.contents = new Buffer(options.contents);
+  }
   if (!options.contents) {
     options.contents = new Buffer('');
   }
@@ -46,9 +53,11 @@ function sanitizeOptions(options) {
 
 function vinylize(opts) {
   return through(function(data, encVinylize, doneWithVinylize) {
-    var options = createOptions(data, opts);
+    var options = evaluateOptions(data, opts);
     if (options.path) {
-      var file = new File(sanitizeOptions(options));
+      options = sanitizePaths(options);
+      options = sanitizeContents(options);
+      var file = new File(options);
       file.data = data;
       this.push(file);
       doneWithVinylize();

@@ -18,14 +18,14 @@ Almost all [constructor options] that are normally available when creating `viny
 
 The following table lists all constructor options that are supported by `vinyl` and how they are treated by `vinylize()`:
 
-| Option     | Type                   | Default                    | Description 
-| ---------- | ---------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| `cwd`      | `String`               | [`process.cwd()`]          | The absolute path of the current working directory.
-| `base`     | `String`               | [`path.dirname`] of `path` | The absolute or relative base path of the new file. Relative paths are [resolved] from `cwd`.
-| `path`     | `String`               |                            | The absolute or relative path for the new file. Relative paths are [resolved] from `cwd`. This **has** to be provided either as a source object property or in the options map.
-| `history`  |                        |                            | This is ignored.
-| `stat`     | [`fs.Stats`]           | `null`                     | File permissions, timestamps etc. that the new file should have.
-| `contents` | [`Buffer`], [`Stream`] | empty `Buffer`             | File contents.
+| Option     | Type                             | Default                    | Description 
+| ---------- | -------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| `cwd`      | `String`                         | [`process.cwd()`]          | The absolute path of the current working directory.
+| `base`     | `String`                         | [`path.dirname`] of `path` | The absolute or relative base path of the new file. Relative paths are [resolved] from `cwd`.
+| `path`     | `String`                         |                            | The absolute or relative path for the new file. Relative paths are [resolved] from `cwd`. This **has** to be provided either as a source object property or in the options map.
+| `history`  |                                  |                            | This is ignored.
+| `stat`     | [`fs.Stats`]                     | `null`                     | File permissions, timestamps etc. that the new file should have.
+| `contents` | [`Buffer`], [`Stream`], `String` | empty `Buffer`             | File contents. `String` values are automatically turned into instances of `Buffer`.
 
 The constructor options can be supplied in two different ways: as [**properties of each source object**](#source-object-properties) or as part of an [**options map**](#options-map) passed directly to `vinylize()`.
 

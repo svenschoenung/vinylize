@@ -233,4 +233,28 @@ describe('vinylize()', function() {
           done();
         });
     });
+  it('should turn string contents into a buffer',
+    function(done) {
+      var files = [];
+      var obj = {};
+      streamify([obj])
+        .pipe(vinylize({
+           path: 'foo/bar.js',
+	   cwd: '/path/',
+	   contents: 'text'
+	}))
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(isVinyl(files[0])).to.equal(true);
+          expect(files[0].contents).to.have.be.instanceOf(Buffer);
+          expect(files[0].contents.toString()).to.equal('text');
+          expect(files[0].path).to.equal('/path/foo/bar.js');
+          expect(files[0].cwd).to.equal('/path/');
+          expect(files[0].base).to.equal('/path/foo/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
+
 });

@@ -13,12 +13,16 @@ var books = [
 
 streamify(books)
   .pipe(vinylize({
-    // path is specified as a lodash template
+    // the following are lodash templates
     // - data refers to current book
     // - options refers to this options map
-    path: '<%= data.author %>/<%= data.title %><%= options.extension %>',
-    extension: '.txt',
-    contents: new Buffer('A book by James Joyce'),
+    path: '<%= data.author %>/<%= data.title %><%= options.myExtension %>',
+    contents: '<%= data.title %>\nWritten by <%= data.author %>',
+
+    // the following are lodash templates as well,
+    // but they don't use any "interpolate" delimiters,
+    // so the result is a constant string
+    myExtension: '.txt',
     base: './'
   }))
   .pipe(vinylFs.dest('books'));
