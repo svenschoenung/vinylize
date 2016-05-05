@@ -10,7 +10,7 @@ Returns a [`stream.Transform`] that converts objects to [`vinyl`] files. Existin
 Each source object is stored in the `.data` property of the generated `vinyl` file. This follows the standard proposed by [`gulp-data`] and allows for interoperability with other gulp plugins.
 
 **Arguments:**
-* `optionsMap`: a plain object of options. See [Vinyl file construction](API#vinyl-file-construction) for a list of options. See [Options map](API#options-map) for guidance on how to use options.
+* `optionsMap`: a plain object of options. See [Vinyl file construction](API.md#vinyl-file-construction) for a list of options. See [Options map](API.md#options-map) for guidance on how to use options.
 
 [`stream.Transform`]: https://nodejs.org/api/stream.html#stream_class_stream_transform
 [`vinyl`]: https://npmjs.com/package/vinyl
@@ -78,5 +78,5 @@ Returns a new stream of `vinyl` files that have been converted from the given `s
 
 **Arguments:**
 * `sourceObjects`: an array of objects that should be converted to `vinyl` files.
-* `optionsMap`: a plain object of options. See [Vinyl file construction](API#vinyl-file-construction) for a list of options. See [Options map](API#options-map) for guidance on how to use options.
+* `optionsMap`: a plain object of options. See [Vinyl file construction](API.md#vinyl-file-construction) for a list of options. See [Options map](API.md#options-map) for guidance on how to use options.
 

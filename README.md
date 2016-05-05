@@ -47,7 +47,7 @@ gulp.task('vinylize-pipe', function() {
 gulp.task('vinylize-stream', function() {
   vinylize(movies, { path: function(movie) {
       return friendlyUrl(movie.title) + '.html';
-    }}))
+    }})
     .pipe(wrap('<h1><%= title %> (<%= year %>)</h1>\n' +
                '<div>Directed by: <%= director %></div>'))
     .pipe(gulp.dest('movies'));
