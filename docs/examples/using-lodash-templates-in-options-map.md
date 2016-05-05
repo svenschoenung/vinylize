@@ -32,12 +32,15 @@ streamify(books)
 
 **books/James Joyce/Dubliners.txt**
 
-    A Book by James Joyce
+    Dubliners
+    Written by James Joyce
 
 **books/James Joyce/A Portrait of the Artist as a Young Man.txt**
 
-    A Book by James Joyce
+    A Portrait of the Artist as a Young Man
+    Written by James Joyce
 
 **books/James Joyce/Ulysses.txt**
 
-    A Book by James Joyce
+    Ulysses
+    Written by James Joyce
