@@ -43,11 +43,22 @@ gulp.task('default', function() {
 });
 ```
 
-**Result:**
+### Result
 
-    movies/2001-a-space-odyssey.html
-    movies/thx-1138.html
-    movies/blade-runner.html
+**movies/2001-a-space-odyssey.html**
+
+    <h1>2001: A Space Odyssey (1968)</h1>
+    <div>Directed by: Stanley Kubrick</div>
+
+**movies/thx-1138.html**
+
+    <h1>THX 1138 (1971)</h1>
+    <div>Directed by: George Lucas</div>
+
+**movies/blade-runner.html**
+
+    <h1>Blade Runner (1982)</h1>
+    <div>Directed by: Ridley Scott</div>
 
 See the [examples](docs/examples) folder for more examples. 
 
