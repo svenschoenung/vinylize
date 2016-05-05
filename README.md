@@ -49,6 +49,12 @@ gulp.task('default', function() {
     movies/thx-1138.html
     movies/blade-runner.html
 
+See the [examples](docs/examples) folder for more examples. 
+
+## API
+
+See the [API documentation](docs/API.md) for available functions and options.
+
 ## License
 
 [MIT](LICENSE)
