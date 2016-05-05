@@ -53,6 +53,11 @@ function sanitizeContents(options) {
 
 function vinylize(opts) {
   return through(function(data, encVinylize, doneWithVinylize) {
+    if (File.isVinyl(data)) {
+      this.push(data);
+      doneWithVinylize();
+      return;
+    }
     var options = evaluateOptions(data, opts);
     if (options.path) {
       options = sanitizePaths(options);

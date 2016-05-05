@@ -4,6 +4,8 @@
 
 Returns a [`stream.Transform`] that converts objects to [`vinyl`] files. 
 
+Existing `vinyl` files are passed through unchanged.
+
 Each source object is stored in the `.data` property of the generated `vinyl` file. This follows the standard proposed by [`gulp-data`] and allows for interoperability with other gulp plugins.
 
 
