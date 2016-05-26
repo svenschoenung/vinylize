@@ -32,6 +32,12 @@ The following table lists all constructor options that are supported by `vinyl` 
 | `stat`     | [`fs.Stats`]                     | `null`                     | File permissions, timestamps etc. that the new file should have.
 | `contents` | [`Buffer`], [`Stream`], `String` | empty `Buffer`             | File contents. `String` values are automatically turned into instances of `Buffer`.
 
+The following additional options are also supported:
+
+| Option              | Type    | Default                    | Description 
+| ------------------- | ------- | -------------------------- | -------------------------------------------------------------------------------------
+| `ignoreSourceProps` | boolean | `false`                    | Whether or not to pass properties of the source object to the vinyl file constructor.
+
 The constructor options can be supplied in two different ways: as [**properties of each source object**](#source-object-properties) or as part of an [**options map**](#options-map) passed directly to `vinylize()`.
 
 [constructor options]: https://www.npmjs.com/package/vinyl#constructoroptions
@@ -45,7 +51,9 @@ The constructor options can be supplied in two different ways: as [**properties 
 
 #### Source object properties
 
-All properties of the source object are passed to the `vinyl` file constructor unless they are overwritten in the options map passed to `vinylize()` itself.
+All properties of the source object are passed to the `vinyl` file constructor unless:
+* they are overwritten in the options map passed to `vinylize()` itself
+* the `ignoreSourceProps` option is set to `true`
 
 *See example: [Using source object properties]*
 

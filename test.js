@@ -316,7 +316,26 @@ describe('vinylize()', function() {
           done();
         });
     });
-
-
-
+  it('should honor useSourceObjectProps option',
+    function(done) {
+      var files = [];
+      var obj = { contents:'Test' };
+      streamify([obj])
+        .pipe(vinylize({
+          ignoreSourceProps:true,
+          cwd:'/path/',
+          path:'foo.txt',
+        }))
+        .pipe(collect(files))
+        .on('finish', function() {
+          expect(files).to.have.length.of(1);
+          expect(File.isVinyl(files[0])).to.equal(true);
+          expect(files[0].contents.toString()).to.equal('');
+          expect(files[0].path).to.equal('/path/foo.txt');
+          expect(files[0].cwd).to.equal('/path/');
+          expect(files[0].base).to.equal('/path/');
+          expect(files[0].data).to.equal(obj);
+          done();
+        });
+    });
 });

@@ -16,7 +16,7 @@ function evaluateOptions(data, opts) {
       options[key] = opts[key];
     }
   });
-  if (_.isPlainObject(data)) {
+  if (!options.ignoreSourceProps && _.isPlainObject(data)) {
     options = _.extend({}, data, options);
   }
   return options;
@@ -53,6 +53,9 @@ function sanitizeContents(options) {
 }
 
 function vinylizePipe(optionsMap) {
+  optionsMap = _.extend({
+    ignoreSourceProps:false
+  }, optionsMap);
   return through(function(data, encVinylize, doneWithVinylize) {
     if (File.isVinyl(data)) {
       this.push(data);
